@@ -1,28 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Meta Tags -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<!doctype html>
+<html class="no-js" lang="ja">
 
-    <!-- Favicon -->
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<head>
+  <!-- Meta Tags -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <!-- Title -->
-    <title>TypeScript Webpack Boilerplate</title>
-  </head>
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <title>Pose Detector</title>
+  <meta name="description" content="">
 
-  <body>
-    <!-- No script message -->
-    <noscript>
-      This website will not work without JavaScript, please enable JavaScript to view.
-    </noscript>
-    <!-- No script message end -->
+  <!--  <meta property="og:title" content="">-->
+  <!--  <meta property="og:type" content="">-->
+  <!--  <meta property="og:url" content="">-->
+  <!--  <meta property="og:image" content="">-->
 
-    <!-- Root -->
-    <div id="root" class="root"></div>
-    <!-- Root end -->
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+<!--  <link rel="stylesheet" href="css/main.scss">-->
+
+  <meta name="theme-color" content="#fafafa">
+  <meta charset="utf-8">
+  <link rel="icon" href="favicon.ico">
+
+</head>
+
+<body>
+  <!-- No script message -->
+  <noscript>
+    This website will not work without JavaScript, please enable JavaScript to view.
+  </noscript>
+  <!-- No script message end -->
+  <div class="container loaded" id="app">
+    <form class="dropzone" id="my-dropzone">
+      <input type="file" id="fileUpload" name="file" accept='images/*'/>
+      <!--      <div id="TheImageContents">-->
+      <!--      </div>-->
+    </form>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="loading">
+          <div class="spinner"></div>
+          <div class="message">
+            処理中
+          </div>
+        </div>
+        <canvas class="border output_canvas" width="100%"></canvas>
+      </div>
+      <div class="col-md-6">
+        ①頭のテッペン
+        ②目の高さ
+        ③首「第一頚椎」
+        ④肩峰「肩の高さ」
+        ⑤腰「上腸骨稜」
+        ⑥膝
+        ⑦足首「うちくるぶしと外くるぶし」
+      </div>
+    </div>
+  </div>
+  <div class="control-panel">
+  </div>
+<!--  <script src="js/vendor/modernizr-3.11.2.min.js"></script>-->
   </body>
+
 </html>
