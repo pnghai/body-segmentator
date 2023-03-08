@@ -5,26 +5,31 @@ import './scss/styles.scss';
 // import * as bootstrap from 'bootstrap'
 // import '@tensorflow/tfjs-core';
 import $ from 'jquery';
-import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-backend-webgl';
+import * as poseDetection from '@tensorflow-models/pose-detection';
+// Register WebGL backend.
+import * as mpPose from '@mediapipe/pose';
 // import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
 import * as bodySegmentation from '@tensorflow-models/body-segmentation';
 import { InputImage } from '@mediapipe/pose';
-import { drawKeypoints, drawSkeleton } from '@/js/utils';
-import { Segmentation } from '@tensorflow-models/body-segmentation/dist/shared/calculators/interfaces/common_interfaces';
+import { drawKeypoints, drawSkeleton } from '@/js/utils/utils';
+import { setBackend } from '@tensorflow/tfjs-core';
+import { BlazePoseMediaPipeModelConfig } from '@tensorflow-models/pose-detection';
+import { BlazePoseMediaPipeEstimationConfig } from '@tensorflow-models/pose-detection/dist/blazepose_mediapipe/types';
 // Uncomment the line below if you want to use TensorFlow.js runtime.
 // import '@tensorflow/tfjs-converter';
 
 const canvasElement = document.getElementsByClassName(
   'output_canvas',
 )[0] as HTMLCanvasElement;
-const ctx = canvasElement.getContext('2d');
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let segmenter: bodySegmentation.BodySegmenter;
+let detector: poseDetection.PoseDetector;
 async function setup() {
   // tfjsWasm.setWasmPaths(
   //   `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${
   //     tfjsWasm.version_wasm}/dist/`);
-  await tf.setBackend('webgl');
+  await setBackend('webgl');
   segmenter = await bodySegmentation.createSegmenter(
     bodySegmentation.SupportedModels.BodyPix,
     {
@@ -34,24 +39,26 @@ async function setup() {
       quantBytes: 4,
     },
   );
+  const model = poseDetection.SupportedModels.BlazePose;
+  const detectorConfig: BlazePoseMediaPipeModelConfig = {
+    runtime: 'mediapipe',
+    // todo: choose runtime based on device. see: https://blog.tensorflow.org/2022/01/body-segmentation.html
+    enableSmoothing: true,
+    enableSegmentation: false,
+    smoothSegmentation: false,
+    solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/pose@${mpPose.VERSION}`,
+    modelType: 'heavy',
+  };
+  detector = await poseDetection.createDetector(model, detectorConfig);
 }
 
-function drawPoses(
-  personOrPersonPartSegmentation: Segmentation[],
-  flipHorizontally: boolean,
-  ctx: CanvasRenderingContext2D | null,
-) {
-  if (Array.isArray(personOrPersonPartSegmentation)) {
-    personOrPersonPartSegmentation.forEach((personSegmentation) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const pose = personSegmentation.pose;
-      // if (flipHorizontally) {
-      //   pose = bodySegmentation.flipPoseHorizontal(pose, personSegmentation.width);
-      // }
-      drawKeypoints(pose.keypoints, 0.1, ctx);
-      drawSkeleton(pose.keypoints, 0.1, ctx);
-    });
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function drawPoses(poses: poseDetection.Pose[], ctx: CanvasRenderingContext2D) {
+  for (const pose of poses) {
+    if (pose.keypoints != null) {
+      drawKeypoints(pose.keypoints, ctx);
+      drawSkeleton(pose.keypoints, ctx);
+    }
   }
 }
 async function body_segment(image: InputImage) {
@@ -82,7 +89,15 @@ async function body_segment(image: InputImage) {
     maskBlurAmount,
     flipHorizontal,
   );
-  drawPoses(segmentation, flipHorizontal, ctx);
+  const estimationConfig: BlazePoseMediaPipeEstimationConfig = {
+    flipHorizontal: flipHorizontal,
+    maxPoses: 1,
+  };
+  const poses = await detector.estimatePoses(image, estimationConfig);
+  const ctx = canvasElement.getContext('2d');
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  drawPoses(poses, ctx);
 }
 
 function fitImageToContainer(canvas: HTMLCanvasElement, img: InputImage) {
