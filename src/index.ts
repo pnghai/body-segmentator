@@ -127,7 +127,7 @@ $(async function () {
       // @ts-ignore
       image.onload = async function (this: HTMLImageElement) {
         await body_segment(image);
-        $('.loading').css('display', 'none');
+        $('#app').addClass('loaded');
       };
     };
     fileReader.readAsDataURL(file);
