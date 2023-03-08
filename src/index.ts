@@ -66,11 +66,9 @@ function drawPoses(
   ctx: CanvasRenderingContext2D | null,
 ) {
   if (Array.isArray(personOrPersonPartSegmentation)) {
-    console.log('personOrPersonPartSegmentation');
     personOrPersonPartSegmentation.forEach((personSegmentation) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      console.log('pose');
       const pose = personSegmentation.pose;
       // if (flipHorizontally) {
       //   pose = bodySegmentation.flipPoseHorizontal(pose, personSegmentation.width);
