@@ -129,6 +129,7 @@
   ],
   "dependencies": {
     "@tensorflow-models/body-pix": "^2.2.0",
+    "@tensorflow-models/pose-detection": "^2.0.0",
     "@tensorflow-models/posenet": "^2.2.2",
     "autoprefixer": "^10.4.13",
     "sass": "^1.58.3",

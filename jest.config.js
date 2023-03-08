@@ -11,7 +11,7 @@ module.exports = {
   coverageDirectory: './coverage',
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
-    '!src/index.js',
+    '!src/utils.ts',
     '!src/@types/**/*',
   ],
   globals: {
