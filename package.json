@@ -133,6 +133,6 @@
     "@tensorflow-models/posenet": "^2.2.2",
     "autoprefixer": "^10.4.13",
     "sass": "^1.58.3",
-    "sass-loader": "^13.2.0"
+    "sass-loader": "^13.2.2"
   }
 }
