@@ -111,6 +111,7 @@ function fitImageToContainer(canvas: HTMLCanvasElement, img: InputImage) {
 }
 $(async function () {
   await setup();
+  $('#app').addClass('loaded');
   $(':file').on('change', function (e) {
     $('#app').removeClass('loaded');
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
