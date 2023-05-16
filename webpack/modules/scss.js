@@ -8,7 +8,7 @@ import { config } from '../configuration';
  * Default modules loader for CSS.
  */
 export const scss = {
-  test: /\.(scss)$/,
+  test: /\.s[ac]ss$/i,
   use: [
     config.IS_DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
     {
@@ -26,5 +26,5 @@ export const scss = {
       loader: 'sass-loader',
     },
   ],
-  exclude: /node_modules/,
+  // exclude: /node_modules/,
 };
