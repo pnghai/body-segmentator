@@ -101,10 +101,10 @@ async function body_segment(image: InputImage) {
 }
 
 function fitImageToContainer(canvas: HTMLCanvasElement, img: InputImage) {
-  const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
-  // Make it visually fill the positioned parent
+  // const scale = img.width / 500 ;
+  // // Make it visually fill the positioned parent
   canvas.style.width = '500px';
-  canvas.style.height = `${800 * scale}px`;
+  canvas.style.height = `${(500 / img.width) * img.height}px`;
   // ...then set the internal size to match
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
@@ -123,12 +123,38 @@ $(async function () {
       if (typeof fileReader.result === 'string') {
         image.src = fileReader.result;
       }
-      fitImageToContainer(canvasElement, image);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      image.onload = async function (this: HTMLImageElement) {
-        await body_segment(image);
-        $('#app').addClass('loaded');
+      image.onload = async function (el) {
+        const resize_width = 1024; //without px
+        const elem = document.createElement('canvas'); //create a canvas
+        //scale the image to 600 (width) and keep aspect ratio
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const scaleFactor = resize_width / el.target.width;
+        elem.width = resize_width;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        elem.height = el.target.height * scaleFactor;
+        //draw in canvas
+        const ctx = elem.getContext('2d');
+        if (ctx == null) {
+          return;
+        }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        ctx.drawImage(el.target, 0, 0, elem.width, elem.height);
+
+        //get the base64-encoded Data URI from the resize image
+        const srcEncoded = ctx.canvas.toDataURL('image/png', 1);
+
+        const img = new Image();
+        img.src = srcEncoded;
+        img.onload = async function () {
+          fitImageToContainer(canvasElement, img);
+          await body_segment(img);
+          $('#app').addClass('loaded');
+        };
       };
     };
     fileReader.readAsDataURL(file);
