@@ -46,7 +46,7 @@
     "@mediapipe/drawing_utils": "^0.3.1675466124",
     "@mediapipe/pose": "^0.5.1675469404",
     "@mediapipe/selfie_segmentation": "^0.1.1675465747",
-    "@popperjs/core": "^2.11.6",
+    "@popperjs/core": "^2.11.8",
     "@tensorflow-models/body-segmentation": "^1.0.1",
     "@tensorflow/tfjs-backend-wasm": "^3.13.0",
     "@tensorflow/tfjs-backend-webgl": "^3.13.0",
