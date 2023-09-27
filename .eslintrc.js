@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -20,10 +18,11 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 2018,
+    extraFileExtensions: ['.json'],
     sourceType: 'module',
     tsconfigRootDir: __dirname,
     createDefaultProgram: true,
-    project: path.resolve(__dirname, './tsconfig.json'),
+    // project: path.resolve(__dirname, './tsconfig.json'),
     ecmaFeatures: {
       jsx: true,
     },

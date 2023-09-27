@@ -18,7 +18,6 @@ import { BlazePoseMediaPipeModelConfig } from '@tensorflow-models/pose-detection
 import { BlazePoseMediaPipeEstimationConfig } from '@tensorflow-models/pose-detection/dist/blazepose_mediapipe/types';
 // Uncomment the line below if you want to use TensorFlow.js runtime.
 // import '@tensorflow/tfjs-converter';
-
 const canvasElement = document.getElementsByClassName(
   'output_canvas',
 )[0] as HTMLCanvasElement;

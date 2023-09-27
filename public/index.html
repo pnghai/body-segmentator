@@ -30,31 +30,61 @@
 
 </head>
 
-<body>
+<body class=' p-3'>
   <!-- No script message -->
   <noscript>
     This website will not work without JavaScript, please enable JavaScript to view.
   </noscript>
   <!-- No script message end -->
   <div class="container" id="app">
-    <form class="dropzone" id="my-dropzone">
-      <input type="file" id="fileUpload" name="file" accept='image/*' capture/>
-      <!--      <div id="TheImageContents">-->
-      <!--      </div>-->
-    </form>
     <div class="row">
       <div class="col-md-6">
-
-        <canvas class="border output_canvas" width="100%"></canvas>
+        <div class='card mb-4'>
+          <div class='card-body'>
+            <form class="dropzone" id="my-dropzone">
+              <h4 class='mb-3'>痛い場所</h4>
+              <div class='row'>
+                <div class='col-6'>
+                  <div class="form-check">
+                    <input class="form-check-input" type='radio' name='pain_position' id='pain_position1' value='right'>
+                    <label class="form-check-label" for="pain_position1">
+                      右側が痛い
+                    </label>
+                  </div></div>
+                <div class='col-6'>
+                  <div class="form-check">
+                    <input class="form-check-input" type='radio' name='pain_position' id='pain_position2' value='left'>
+                    <label class="form-check-label" for="pain_position2">
+                      左側が痛い
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <input type="file" id="fileUpload" name="file" accept='image/*' capture class="form-control" />
+              <!--      <div id="TheImageContents">-->
+              <!--      </div>-->
+            </form>
+            <canvas class="border output_canvas mt-3" width="100%"></canvas>
+          </div>
+        </div>
       </div>
       <div class="col-md-6">
-        ①頭のテッペン
-        ②目の高さ
-        ③首「第一頚椎」
-        ④肩峰「肩の高さ」
-        ⑤腰「上腸骨稜」
-        ⑥膝
-        ⑦足首「うちくるぶしと外くるぶし」
+        <div class='card mb-4'>
+          <div class='card-body'>
+            ①頭のテッペン
+            ②目の高さ
+            ③首「第一頚椎」
+            ④肩峰「肩の高さ」
+            ⑤腰「上腸骨稜」
+            ⑥膝
+            ⑦足首「うちくるぶしと外くるぶし」
+          </div>
+        </div>
+        <div class='card'>
+          <div class='card-body' id='result'>
+
+          </div>
+        </div>
       </div>
     </div>
     <div class="loading">
